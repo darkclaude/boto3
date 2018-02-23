@@ -1,10 +1,11 @@
 from flask import Flask
 from flask import request
-import urllib3
+import urllib3 
 import shutil
 import boto3
+import os 
 import botocore
-
+ 
 app = Flask(__name__)
 
 @app.route('/upload')
@@ -44,6 +45,7 @@ def uploadaws(f,b):
                      try:
                         s3.Bucket(b).put_object(Key=f,Body=data)
                         print("File Uploaded to Bucket")
+                        os.remove(f)
                         return "File Uploaded to Bucket"
                      except Exception as e:
                          if str(e)=='An error occurred (NoSuchBucket) when calling the PutObject operation: The specified bucket does exist':
