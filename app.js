@@ -142,6 +142,7 @@ var utmodel = {
          tamount: '',
 }
 
+
 var http = require('http');
 //var express = require('express'),
     //app = module.exports.app = express();
@@ -149,3 +150,8 @@ var http = require('http');
 var server = http.createServer(app);
 //var io = require('socket.io').listen(server);  //pass a http.Server instance
 server.listen(process.env.PORT || process.env.port);
+const chalk = require('chalk');
+ 
+console.log(chalk.blue('Hello world! malafacka'));
+ 
+console.log(chalk.red('Hello world! malafacka'));
