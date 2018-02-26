@@ -13,22 +13,21 @@ def upload():
    url = request.args.get('url')
    bucket = request.args.get('bucket')
    name = request.args.get('name')
+  # reuse=  request.args.get
    if url:
         if bucket:
             if name:
                  #return name+" "+bucket+" "+url
                 #url = "https://en-support.files.wordpress.com/2008/12/links-popup.png"
-                 c = urllib3.PoolManager()
+              
                  filename = name
-                 with c.request('GET',url, preload_content=False) as resp, open(filename, 'wb') as out_file:
-                     shutil.copyfileobj(resp, out_file)
-
-                     resp.release_conn()
-                     
-                     return uploadaws(filename,bucket)
+                 fetchfile(filename,bucket,url)
+                
             else:
-                return "Enter Valid FileName"   
-            return url+" "+bucket
+               chunks = url.split('/')
+               print(chunks)
+               filename = str(chunks[len(chunks)-1])
+               return fetchfile(filename,bucket,url)
         else: 
             return "Please Enter Valid Bucket name"      
        #eturn url
@@ -36,7 +35,17 @@ def upload():
        return "Please Enter Valid Url" 
 
 
-    
+
+
+
+def fetchfile(f,b,u):
+  c = urllib3.PoolManager()
+  with c.request('GET',u, preload_content=False) as resp, open(f, 'wb') as out_file:
+      shutil.copyfileobj(resp, out_file)
+
+      resp.release_conn()
+                     
+      return uploadaws(f,b)
       
    
 def uploadaws(f,b):
