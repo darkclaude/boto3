@@ -21,7 +21,7 @@ def upload():
                 #url = "https://en-support.files.wordpress.com/2008/12/links-popup.png"
               
                  filename = name
-                 fetchfile(filename,bucket,url)
+                 return fetchfile(filename,bucket,url)
                 
             else:
                chunks = url.split('/')
